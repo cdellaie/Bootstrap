@@ -29,7 +29,7 @@ S=cummin(X);
 
 Tstar=BootMC(X,1000,100);
 plot(Tstar[order(Tstar)],(1/B)*(1:B),col='blue',type='s',xlim=c(0,10))
-title(main='FDR empirique du max d'une uniforme obtenue par Bootstrap')
+title(main='FDR empirique du max d une uniforme obtenue par Bootstrap')
 
 
 #loi normale
@@ -41,7 +41,7 @@ Z=rnorm(N,m,sigma);
 
 Zmax=BootMC(Z,B,100);
 plot(Zmax[order(Zmax)],(1/B)*(1:B),col='blue',type='s')
-title(main='FDR empirique du max d'une normale obtenue par Bootstrap')
+title(main='FDR empirique du max d une normale obtenue par Bootstrap')
 
 #loi de Pareto : queue epaisse
 B=1000;
