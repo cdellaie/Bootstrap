@@ -54,6 +54,90 @@ Pmax=BootMC(P,B,100);
 plot(Pmax[order(Pmax)],(1/B)*(1:B),col='blue',type='s')
 title(main='FDR empirique du max d une pareto obtenue par Bootstrap')
 
+#16/05/2014
+#Pdf de Guillaume
+# Test sur une normale
+
+e=exp(-1);
+B=1000;
+N=100000;
+bn=100;
+m=0;
+sigma=1;
+t=seq(0,10,by= 0.1);
+
+Z=rnorm(N,m,sigma);
+a=quantile(Z,1-(e*N)^(-1))-quantile(Z,1-(1/N));
+b=quantile(Z,1-(1/N));
+
+Zmax=(BootMC(Z,B,bn)-b)/a;
+Ztild=Zmax[order(Zmax)];
+plot(Ztild,(1/B)*(1:B),col='blue',type='s')
+lines(t,exp(-exp(-t)),col=rgb(0.6,0.3,0.1),type='l');
+title(main='FDR empirique du max d une normale obtenue par Bootstrap')
+
+#01/06/2014
+# estimation du gamma par regression, articles de Bertail
+
+Subsample=function(x,bn){
+N=length(x);
+q=N-bn+1;
+Tstar=rep(0,q);
+for (k in 1:q ){
+	i=k:(k+bn-1);
+	Tstar[k]=max(x[i]);
+	}
+return(Tstar);
+}
+
+N=10;
+I=16;
+bn= N**seq(1,4,by=0.2);
+y=rep(0,I);
+t=0.5;
+
+############
+# Uniforme #
+############
+
+theta=10;
+U=runif(N**5,0,theta);
+
+for (k in 1:I ){
+	Z=Subsample(U,bn[k]);
+	y[k]=log(abs(quantile(Z,t)));
+	}
+
+#regression
+plot(y ~ log(bn)+0,pch=4,col="blue"); 
+lin<-lm(y ~ log(bn)+0);
+abline(lin, col="red");
+title("Estimation par régression");
+
+C=sum( log(bn)- mean(log(bn)) ) ;
+gamma=((sum(y-mean(y)))*C)/C**2;    #0.4
+
+##############
+# Gaussienne #
+##############
+
+X=rnorm(N**5,0,1);
+for (k in 1:I ){
+	Z=Subsample(X,bn[k]);
+	y[k]=log(abs(quantile(Z,t)));
+	}
+
+#regression
+plot(y ~ log(bn),pch=4,col="blue"); 
+lin<-lm(y ~ log(bn));
+abline(lin, col="red");
+title("Estimation par régression");
+
+# à la main (on trouve un coefficient differrent !)
+C=sum( log(bn)- mean(log(bn)) ) ;
+gamma=((sum(y-mean(y)))*C)/C**2;    #0.3
+
+
 
 
 
