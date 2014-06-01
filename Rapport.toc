@@ -1,0 +1,5 @@
+\select@language {french}
+\contentsline {section}{\numberline {1}Bootstrap et valeurs extr\IeC {\^e}mes}{3}
+\contentsline {subsection}{\numberline {1.1}Th\IeC {\'e}or\IeC {\`e}mes des valeurs extr\IeC {\^e}mes}{3}
+\contentsline {section}{\numberline {2}Estimation de la vitesse de convergence par r\IeC {\'e}gression}{3}
+\contentsline {subsection}{\numberline {2.1}Applications \IeC {\`a} la th\IeC {\'e}orie des valeux extr\IeC {\^e}mes. Simulations.}{4}

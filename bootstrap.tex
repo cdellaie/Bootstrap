@@ -1,13 +1,14 @@
 
 \documentclass{article}
 
-\usepackage{fullpage}
-\usepackage[french]{babel} 
-\usepackage[T1]{fontenc} 
-\usepackage{amsmath} 
+\usepackage[frenchb]{babel}
 \usepackage{amsfonts}
-\usepackage{mathabx}
+\usepackage{amsmath}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
 \usepackage{graphicx}
+\usepackage{tikz-cd}
 
 \title{Bootstrap}
 
@@ -16,26 +17,26 @@
 
 \noindent Ci-dessous, je comprends du sujet.\\
 
-\noindent On considère un n-échantillon $\boldsymbol{X}^n = (X^n_1, ..., X^n_n)$ indépendantes et identiquement distribuées suivant une loi dont on note $F_X$ la fonction de répartition. On note le maximum $M_n = \max \{X_1, ..., X_n\}$.\\
+\noindent On consid�re un n-�chantillon $\boldsymbol{X}^n = (X^n_1, ..., X^n_n)$ ind�pendantes et identiquement distribu�es suivant une loi dont on note $F_X$ la fonction de r�partition. On note le maximum $M_n = \max \{X_1, ..., X_n\}$.\\
 
 \noindent Cette loi appartient au domaine d'attraction de Gumbel. Autrement dit, il existe une suite $(a_n,b_n)$ telle que 
 \begin{equation}
 \frac{M_n - b_n}{a_n} \overset{L}{\longrightarrow} G
 \end{equation}
-où $G$ est la loi de Gumbel dont la fonction de répartition $F_G$ s'écrit $\forall x \in \mathbb{R}$
+o� $G$ est la loi de Gumbel dont la fonction de r�partition $F_G$ s'�crit $\forall x \in \mathbb{R}$
 \begin{equation}
 F_G(x) = 1 - e^{-e^{-x}}
 \end{equation}
-Ce domaine est très grand et de nombreuses lois classiques y appartiennent : exponentiel, gamma, logistique, log-normale, normale, ...\\
+Ce domaine est tr�s grand et de nombreuses lois classiques y appartiennent : exponentiel, gamma, logistique, log-normale, normale, ...\\
 
-\noindent Dans cette situation, il a été montré par de Haan qu'on peut choisir la suite $(a_n, b_n)$ comme suit
+\noindent Dans cette situation, il a �t� montr� par de Haan qu'on peut choisir la suite $(a_n, b_n)$ comme suit
 \begin{equation}
 a_n = F_X^{-1}\left(1-\frac{1}{e n}\right) - F_X^{-1}\left(1- \frac{1}{n}\right) \qquad b_n = F_X^{-1}\left(1- \frac{1}{n}\right)
 \end{equation}
 
-\noindent L'objectif de l'étude est de déterminer la distribution de $M_n$ à partir du seul échantillon $\boldsymbol{X}^n$. En désignant par $P$ une loi quelconque, le paramètre d'intérêt est donc $TP = P(M_n < x) = E_P[1(M_n < x)]$ $\forall x \in \mathbb{R}$.\\
+\noindent L'objectif de l'�tude est de d�terminer la distribution de $M_n$ � partir du seul �chantillon $\boldsymbol{X}^n$. En d�signant par $P$ une loi quelconque, le param�tre d'int�r�t est donc $TP = P(M_n < x) = E_P[1(M_n < x)]$ $\forall x \in \mathbb{R}$.\\
 
-\noindent La distribution (exacte) de $M_n$ s'écrit comme suit
+\noindent La distribution (exacte) de $M_n$ s'�crit comme suit
 \begin{equation}
 T(P) = P(X_1 < x, ..., X_n < x) = [F_X(x)]^n
 \end{equation}
