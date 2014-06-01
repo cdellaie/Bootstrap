@@ -16,26 +16,26 @@
 
 \noindent Ci-dessous, je comprends du sujet.\\
 
-\noindent On considère un n-échantillon $\boldsymbol{X}^n = (X^n_1, ..., X^n_n)$ indépendantes et identiquement distribuées suivant une loi dont on note $F_X$ la fonction de répartition. On note le maximum $M_n = \max \{X_1, ..., X_n\}$.\\
+\noindent On considÃ¨re un n-Ã©chantillon $\boldsymbol{X}^n = (X^n_1, ..., X^n_n)$ indÃ©pendantes et identiquement distribuÃ©es suivant une loi dont on note $F_X$ la fonction de rÃ©partition. On note le maximum $M_n = \max \{X_1, ..., X_n\}$.\\
 
 \noindent Cette loi appartient au domaine d'attraction de Gumbel. Autrement dit, il existe une suite $(a_n,b_n)$ telle que 
 \begin{equation}
 \frac{M_n - b_n}{a_n} \overset{L}{\longrightarrow} G
 \end{equation}
-où $G$ est la loi de Gumbel dont la fonction de répartition $F_G$ s'écrit $\forall x \in \mathbb{R}$
+oÃ¹ $G$ est la loi de Gumbel dont la fonction de rÃ©partition $F_G$ s'Ã©crit $\forall x \in \mathbb{R}$
 \begin{equation}
 F_G(x) = 1 - e^{-e^{-x}}
 \end{equation}
-Ce domaine est très grand et de nombreuses lois classiques y appartiennent : exponentiel, gamma, logistique, log-normale, normale, ...\\
+Ce domaine est trÃ¨s grand et de nombreuses lois classiques y appartiennent : exponentiel, gamma, logistique, log-normale, normale, ...\\
 
-\noindent Dans cette situation, il a été montré par de Haan qu'on peut choisir la suite $(a_n, b_n)$ comme suit
+\noindent Dans cette situation, il a Ã©tÃ© montrÃ© par de Haan qu'on peut choisir la suite $(a_n, b_n)$ comme suit
 \begin{equation}
 a_n = F_X^{-1}\left(1-\frac{1}{e n}\right) - F_X^{-1}\left(1- \frac{1}{n}\right) \qquad b_n = F_X^{-1}\left(1- \frac{1}{n}\right)
 \end{equation}
 
-\noindent L'objectif de l'étude est de déterminer la distribution de $M_n$ à partir du seul échantillon $\boldsymbol{X}^n$. En désignant par $P$ une loi quelconque, le paramètre d'intérêt est donc $TP = P(M_n < x) = E_P[1(M_n < x)]$ $\forall x \in \mathbb{R}$.\\
+\noindent L'objectif de l'Ã©tude est de dÃ©terminer la distribution de $M_n$ Ã  partir du seul Ã©chantillon $\boldsymbol{X}^n$. En dÃ©signant par $P$ une loi quelconque, le paramÃ¨tre d'intÃ©rÃªt est donc $TP = P(M_n < x) = E_P[1(M_n < x)]$ $\forall x \in \mathbb{R}$.\\
 
-\noindent La distribution (exacte) de $M_n$ s'écrit comme suit
+\noindent La distribution (exacte) de $M_n$ s'Ã©crit comme suit
 \begin{equation}
 T(P) = P(X_1 < x, ..., X_n < x) = [F_X(x)]^n
 \end{equation}
@@ -44,29 +44,29 @@ Asymptotiquement, comme la loi appartient au domaine d'attraction de Gumbel
 P\left(\frac{M_n - b_n}{a_n} < x\right) \simeq F_G(x) \quad \Longrightarrow \quad TP \simeq F_G(a_n x + b_n)
 \end{equation}
 
-\noindent Par commodité, on considère donc aussi $\tilde{T}P = P\left(\frac{M_n - b_n}{a_n} < x\right)$.\\
+\noindent Par commoditï¿½, on considï¿½re donc aussi $\tilde{T}P = P\left(\frac{M_n - b_n}{a_n} < x\right)$.\\
 
-\noindent La distribution bootstrap d'Efron de $M_n$ s'écrit comme suit
+\noindent La distribution bootstrap d'Efron de $M_n$ s'ï¿½crit comme suit
 \begin{equation}
 P^*_n = \left[1-\left(\frac{n-1}{n}\right)^n\right] \delta_{X_{(n)}} + ... +  \left[\left(\frac{k}{n}\right)^n-\left(\frac{k-1}{n}\right)^n\right] \delta_{X_{(k)}} + ... + \left(\frac{1}{n}\right)^n  \delta_{X_{(1)}}
 \end{equation}
-Fukuchi a montré qu'asymptotiquement cette loi convergeait vers un processus stochastique fonction du tirage effectué. Faut-il développer ce point ou utiliser un autre argument ?\\
+Fukuchi a montrï¿½ qu'asymptotiquement cette loi convergeait vers un processus stochastique fonction du tirage effectuï¿½. Faut-il dï¿½velopper ce point ou utiliser un autre argument ?\\
 
 \noindent Si on tire seulement $m$ avec $m < n$, on a
 \begin{equation}
 P^*_{m|n} = \left[1-\left(\frac{n-1}{n}\right)^m\right] \delta_{X_{(n)}} + ... +  \left[\left(\frac{k}{n}\right)^m-\left(\frac{k-1}{n}\right)^m\right] \delta_{X_{(k)}} + ... + \left(\frac{1}{n}\right)^m  \delta_{X_{(1)}}
 \end{equation}
-Fukuchi montre que $m = o(n)$, $\tilde{T}P^*_{m|n}$ converge vers $F_G$ avec la distance  de Kolmogorov. Comme on ne connaît pas $a_n$ et $b_n$, on peut l'estimer comme suit et travailler par analogie.
+Fukuchi montre que $m = o(n)$, $\tilde{T}P^*_{m|n}$ converge vers $F_G$ avec la distance  de Kolmogorov. Comme on ne connaï¿½t pas $a_n$ et $b_n$, on peut l'estimer comme suit et travailler par analogie.
 \begin{equation}
 \hat{a}_n = \hat{F}_X^{-1}\left(1-\frac{1}{e n}\right) - \hat{F}_X^{-1}\left(1- \frac{1}{n}\right) \qquad \hat{b}_n = \hat{F}_X^{-1}\left(1- \frac{1}{n}\right)
 \end{equation}
-où $\hat{F}_X$ est la distribution empirique construite à partir de l'échantillon $\boldsymbol{X}^n$. C'est la version m out of n qui a priori fonctionne pour la distribution de $M_n$. \\
+oï¿½ $\hat{F}_X$ est la distribution empirique construite ï¿½ partir de l'ï¿½chantillon $\boldsymbol{X}^n$. C'est la version m out of n qui a priori fonctionne pour la distribution de $M_n$. \\
 
-\noindent Je ne vois pas la différence entre le bootstrap sous-échantillonné et le m out of n. Sais-tu quelle est elle ?\\
+\noindent Je ne vois pas la diffï¿½rence entre le bootstrap sous-ï¿½chantillonnï¿½ et le m out of n. Sais-tu quelle est elle ?\\
 
-\noindent A priori, la vitesse de convergence est donnée par $a_n$. On peut alors faire une régression pour trouver $a_n$ sous la forme $n^\alpha$. Il y a un article de Bertail sur le sujet : on subsampling estimators with unknown rate of convergence. En regardant rapidement, l'article donne les preuves que ça fonctionne sous condition de choisir les points où on regarde l'évolution de la courbe lorsque $m$ varie.\\
+\noindent A priori, la vitesse de convergence est donnï¿½e par $a_n$. On peut alors faire une rï¿½gression pour trouver $a_n$ sous la forme $n^\alpha$. Il y a un article de Bertail sur le sujet : on subsampling estimators with unknown rate of convergence. En regardant rapidement, l'article donne les preuves que ï¿½a fonctionne sous condition de choisir les points oï¿½ on regarde l'ï¿½volution de la courbe lorsque $m$ varie.\\
 
-\noindent La fonction de répartition $\tilde{T}P^*_{m|n}$ est en escalier. On pourrait donc accélérer la convergence en la lissant par exemple à l'aide d'un noyau.
+\noindent La fonction de rï¿½partition $\tilde{T}P^*_{m|n}$ est en escalier. On pourrait donc accï¿½lï¿½rer la convergence en la lissant par exemple ï¿½ l'aide d'un noyau.
 
 \end{document}
 
