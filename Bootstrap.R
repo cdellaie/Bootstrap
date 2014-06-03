@@ -2,6 +2,13 @@
 		# Valeurs extremes #
 		####################
 
+#graph préliminaire : les différentes loi EVD
+
+t=seq(-4,4,by=0.1);
+plot(t,exp(-exp(-t)),type='l',col='blue')
+lines(t,exp(-((1+t)^{-1})*(1+t>0)))
+lines(t,exp(-(1-t)*(1-t>0)),col='red')
+
 #package qui propose une fonction simulant des pareto
 #rpareto(N,location,shape)
 library(VGAM)
@@ -127,8 +134,8 @@ lin<-lm(y ~ log(bn)+0);
 abline(lin, col="red");
 title("Estimation par régression");
 
-C=sum( log(bn)- mean(log(bn)) ) ;
-gamma=((sum(y-mean(y)))*C)/C**2;    #0.4
+gamma= sum((y-mean(y))*(log(bn)- mean(log(bn))))/sum( (log(bn)- mean(log(bn)))**2 ) ;  
+    #0.4
 
 ##############
 # Gaussienne #
@@ -146,27 +153,80 @@ lin<-lm(y ~ log(bn));
 abline(lin, col="red");
 title("Estimation par régression");
 
-# à la main (on trouve un coefficient différent !)
-C=sum( log(bn)- mean(log(bn)) ) ;
-gamma=((sum(y-mean(y)))*C)/C**2;    #0.3
+#vérif : gamma = 0.1494989
+gamma= sum((y-mean(y))*(log(bn)- mean(log(bn))))/sum( (log(bn)- mean(log(bn)))**2 ) ;  
+
 
 ###
 ## Section : The extreme value statistics revisited
 ## Estimation par difference de quantiles
 ###
-t1=0.5;
-t2=0.25;
-for (k in 1:I ){
-	Z=Subsample(X,bn[k]);
-	y[k]=log(abs(quantile(Z,t1)-quantile(Z,t2)));
+
+N=10;
+I=16;
+J=10;
+bn= N**seq(1,4,by=0.2);
+delta=0.1;
+y=matrix(0,I,J);
+t=runif(J,0.33-delta,0.33+delta);
+for (i in 1:I )
+	{
+		for (j in 1:J)
+		{
+		Z=Subsample(X,bn[i]);
+		y[i,j]=log(abs(quantile(Z,t[j])));
+		}
 	}
 
+z=rep(0,I);
+for (i in 1:I){z[i]=(mean(y[i,])-mean(y))*(log(bn[i])-mean(log(bn)));}
+gamma= sum(z)/sum((log(bn)-mean(log(bn)))**2);
+#gamma=0.1483323
 plot(y ~ log(bn),pch=4,col="blue"); 
 lin<-lm(y ~ log(bn));
 abline(lin, col="red");
 title("Estimation par régression");
-# intercept : -0.8158 gamma: -0.1108 gamma a la main : -0.3
 
 
+Reg=function(X,delta,I,J){
+	N=10;
+	bn= N**seq(1,log(length(X)),by=0.2);
+	y=matrix(0,I,J);
+	t=runif(J,0.33-delta,0.33+delta);
+	for (i in 1:I )
+		{
+			for (j in 1:J)
+			{
+			Z=Subsample(X,bn[i]);
+			y[i,j]=log(abs(quantile(Z,t[j])));
+			}
+		}
 
+	z=rep(0,I);
+	for (i in 1:I)
+		{
+			z[i]=(mean(y[i,])-mean(y))*(log(bn[i])-mean(log(bn)))
+		}
+	return(sum(z)/sum((log(bn)-mean(log(bn)))**2));
+}
 
+################
+#  simulations #
+################
+
+N=10;
+delta=0.1 ;
+I=16; J=10;
+X=rnorm(N**5,0,1);
+theta=8;
+U=runif(N**5,0,theta);
+sh=1; loc=1;
+P=rpareto(N**5,shape=sh,location=loc);
+
+gammagauss=Reg(X,delta,I,J);
+gammaunif=Reg(X,delta,I,J);
+gammapareto=Reg(X,delta,I,J);
+
+#gammagauss = 0.003967868
+#gammapareto = 0.003950971
+#gammaunif = 0.004037952

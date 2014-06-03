@@ -52,12 +52,44 @@
 
 \begin{thm}
 Si , pour une fonction de répartition $F$, il existe des suites réelles $a_n>0$ et $b_n$ telles que, en tout point de continuité de $F$ :
-\[\lim_{n\infty} F^n(a_n x + b_n)=G_\gamma(x),\]
+\[\lim_{n\infty} F^n(a_n x + b_n)=G_\alpha(x),\]
 \noindent la loi limite $G$ est de la forme :
-\[G_\gamma (x) = \exp(-(1+\gamma x )^{-\frac{1}{\gamma}}) \quad \text{pour} \ 1+\gamma x >0\]
+\[G_\alpha (x) = \exp(-(1+\alpha x )^{-\frac{1}{\alpha}}) \quad \text{pour} \ 1+\alpha x >0\]
 \end{thm}
 
-Le paramètre $\gamma$ donne de l'information sur la queue de la distribution : c'est un paramètre d'intérêt servant à prédire les évenements rares. Toutefois, les méthodes de Bootstrap naives ne fonctionnent plus dans le cas des valeurs extrêmes, à cause d'un potentiel biais.\\
+Le paramètre $\alpha$ donne de l'information sur la queue de la distribution : c'est un paramètre d'intérêt servant à prédire les évenements rares. Toutefois, les méthodes de Bootstrap naives ne fonctionnent plus dans le cas des valeurs extrêmes, à cause d'un potentiel biais.\\
+
+Remarque : $G_0(x)=\exp\{e ^{-x}\}$.\\
+
+\begin{enumerate}
+\item Si $\alpha>0$, on dit que $F$ est dans le domaine d'attraction de la loi de Fréchet, domaine des lois à queues épaisses (décroissance en loi de puissance). 
+\item Si $\alpha=0$, on dit que $F$ est dans le domaine d'attraction de la loi de Gumbel (queues légères).
+\item Si $\alpha>0$, on dit que $F$ est dans le domaine d'attraction de la loi de Weibull (queues finies).
+\end{enumerate}
+
+\begin{figure}[!h]\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+& & & \\
+\textbf{Domaine} & \textbf{Gumbel	} 	&	\textbf{ Fréchet }	 & \textbf{Weibull} 	\\
+& & & \\
+\hline
+& & & \\
+ 	&       Normale 	&         	  	&             	\\
+ 	& 	Exponentielle & 	Cauchy	 &	 Uniforme 		\\
+\textbf{Lois} 	&	Fréchet 	&  	Pareto	 &	Beta\\
+	&	Lognormale 	& 	Student 	&				\\
+	& 	Gamma 		&  		&				\\
+	&	 Weibull  		&		&	\\
+& & & \\
+\hline
+\end{tabular}
+\label{tab}
+\caption{Quelques exemples de lois appartenant à différents domaines.}
+\end{figure}
+
+%graph de différents gamma
+
 
 \section{Estimation de la vitesse de convergence par régression}
 
@@ -81,7 +113,14 @@ En faisant alors varier les taux de sous-échantillonage $b_{n,i}$, on peut alor
 \[\hat\gamma=\frac{\sum_{i=1}^I(y_i-\overline y)(\log b_{i,n}-\overline\log)}{\sum_{i=1}^I(\log b_{i,n}-\overline\log)^2},\]
 où $y_i=\log |K^{-1}_{b_{n,i}}(t|X^n)|$.\\
 
-Une deuxième méthode est inspirée par la remarque suivante : il  suffit d'observer des différences de quantiles. En effet, si l'on prend l'équation du théorème \ref{reg} pour deux quantiles d'ordre $0<t_1<t_2$, et que l'on soutrait l'une à l'autre, après avoir passé au $\log$, on obtient :
+\begin{figure}[!h]\centering
+\includegraphics[scale=0.4]{RegGauss.jpeg}
+\label{RegGauss}
+\caption{Régression des log-quantiles obtenus par bootstrap sur $\log b_n$ dans le cas de la loi normale.
+ Ici $I=16$ et $N=10^5$, on obtient $\gamma_I=0.1494989$.}
+\end{figure}
+
+Une deuxième méthode est inspirée par la remarque suivante : il  suffit d'observer des différences de quantiles. En effet, si l'on prend l'équation du théorème \ref{Reg} pour deux quantiles d'ordre $0<t_1<t_2$, et que l'on soutrait l'une à l'autre, après avoir passé au $\log$, on obtient :
 \[\log|K^{-1}_{b_{n}}(t_1|X^n)-K^{-1}_{b_{n}}(t_2|X^n)| =\log|K^{-1}(t_1|P)-K^{-1}(t_2|P)|  + \gamma \log b_n +o_P(1).\]
 
 Avec plusieurs quantiles d'ordre $0<t_1<....< t_J<1$, on obtient un système :
@@ -91,20 +130,28 @@ où $a_j=\log|K^{-1}(t_j|P)| $ et $u_{ij}=o_P(1)$.\\
  Un estimateur de type ANOVA est 
 \[\gamma_{IJ}=\frac{\sum_{i=1}^I(y_{i,.}-\overline y)(\log b_{i,n}-\overline\log)}{\sum_{i=1}^I(\log b_{i,n}-\overline\log)^2},\]
 
-\begin{thm}
+\begin{thm}\label{Anova}
 Soit $X$ une suite stationnaire et fortement mélangeante, dont la statistique d'intérêt $\tau_n T_n$ possède une distribution asymptotique, lorsque $\tau_n = n^{-\gamma}$, $\gamma>0$ inconnu. On suppose de plus que $K$ est strictement croissante sur un intervalle borné et continue. On choisit des point $t_j$ dans $(0,1)$ et différents taux de sous-échnatilonage $n^{\beta_i}$, $1>\beta_1>...>\beta_I>0$. Alors :
 \[\gamma _{IJ}=\gamma +o_P((\log n )^{-1})\]
 \end{thm}
 
-\subsection{Applications à la théorie des valeux extrêmes. Simulations.}
-
+Voici des estimateurs de $\gamma$ obtenus par la méthode donnée par le théorème \ref{Anova}. Ici $I=16$ et $J=10$, les échnantillons sont de taille $N=100 000$, et l'on a pris $\beta_i=10^i$ pour $i$ allant de $1$ à $4$. 
 \begin{figure}[!h]\centering
-\includegraphics[scale=0.4]{RegGauss.jpeg}
-\label{RegGauss}
-\caption{Régression de $\log b_n$.}
+\begin{tabular}{|c|c|c|c|}
+\hline
+& & & \\
+\textbf{Lois} & \textbf{Normale} & \textbf{Pareto} & \textbf{Uniforme } \\
+& & & \\
+\hline
+& & & \\
+$\gamma_{IJ}$  & 0.003967868 & 0.003950971 & 0.004037952 \\
+& & & \\
+\hline
+\end{tabular}
+\caption{Simulations.}
 \end{figure}
 
-
+\newpage
 \bibliographystyle{plain}
 \bibliography{biblio} 
 \nocite{*}
